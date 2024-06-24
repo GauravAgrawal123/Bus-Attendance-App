@@ -1,59 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>The Deens Academy</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f2f2f2;
-		}
-		.container {
-			width: 300px;
-			border-radius: 2px;
-			box-shadow: 0px 0px 10px rgb(0,0,0);
-			margin: 50px auto;
-            height:100%;
-		}
-        .Language{
-            height: 100%;
-            width:80%;
-            background-color: #0000CC;
-            padding: 0px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .goback {
-			border: solid;
-			border-color: black;
-			border-radius: 100px;
-			width:fit-content;
-			background-color: #0000CC;
-			height: fit-content;
-			width: fit-content;
-			margin-right: 50px;
-		}
-        img{
-            width:50px;
-            height:50px;
-        }
-        #heading1{
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-			text-align: justify;
-            color: white;
-            margin-left: 20px;
-        }
-	</style>
+<title>The Deens Academy</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFSfVJnhR4eZSRztRZhrtV7koeYJbQ4bRn4A&s');
+  padding: 40px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 10px rgb(0,0,0);
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.header {
+  margin-bottom: 60px;
+  flex: 1;
+}
+.input-field {
+  margin-bottom: 40px;
+  flex: 1;
+}
+.input-field label {
+  display: block;
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+.input-field input[type="text"], .input-field input[type="password"] {
+  width: 100%;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 2em;
+}
+.input-field input[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 20px 40px;
+  border: none;
+  border-radius: 10px;
+  font-size: 2em;
+  cursor: pointer;
+  text-align: center;
+}
+.labels {
+  font-size: 5em;
+  color: black;
+  padding: 20px;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 40px;
+}
+</style>
 </head>
 <body>
-	<div class="container">
-        <div class="Language">
-                <div class="goback">
-				    <a href="index.html"><img src = 'settings.png'></a>
-			    </div>
-				<h2 id="heading1">Settings</h2>
-        </div>
-		
-	</div>
+<div class="container">
+<div class="header">
+  <img src="deens_logo.png" alt="The Deens Academy Logo">
+</div>
+<form class="input-field" id="loginForm">
+<label for="busId" class="labels">Bus ID</label>
+<input type="text" id="busId" name="busId">
+<label for="password" class="labels">Password</label>
+<input type="password" id="password" name="password">
+<br>
+<input type="submit" value="Login">
+</form>
+</div>
+
+<script>
+  const loginForm = document.getElementById('loginForm');
+
+  loginForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    const busId = document.getElementById('busId').value;
+    const password = document.getElementById('password').value;
+
+    const databaseUrl = 'your_database_url'; // Replace with database URL
+
+    // Use fetch API or AJAX to send a request to your server
+    fetch(databaseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ busId, password }),
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json(); // Assuming server returns JSON data
+      } else {
+        // Handle error, display an error message
+        throw new Error('Login failed. Please check your credentials.');
+      }
+    })
+    .then(data => {
+      if (data.success) {
+        // Redirect to the next page
+        window.location.href = 'final.html'; 
+      } else {
+        // Handle incorrect credentials, display an error message
+        alert('Invalid bus ID or password.');
+      }
+    })
+    .catch(error => {
+      console.error('Error during login:', error);
+      alert('An error occurred during login. Please try again later.');
+    });
+  });
+</script>
+
 </body>
 </html>
